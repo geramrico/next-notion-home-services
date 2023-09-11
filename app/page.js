@@ -1,4 +1,9 @@
-import { PageHeader,PageHeaderHeading } from '@/components/page-header'
+import {
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from 'components/page-header'
+import ServicesDashboard from './_components/ServicesDashboard'
 
 const { Client } = require('@notionhq/client')
 
@@ -7,28 +12,37 @@ const notion = new Client({
 })
 
 export default async function Home() {
-  const { results } = await notion.databases.query({
+  const data = await notion.databases.query({
     database_id: process.env.NOTION_DB_ID,
   })
 
+  const results = data.results
+
   const services = results.map((item) => {
     return {
+      id: item.id,
       name: item.properties.Name.title[0]?.plain_text,
       categories: item.properties.Categories.multi_select.map(
         (category) => category.name
       ),
       phone: item.properties.Phone.phone_number,
+      description: item.properties.Description.rich_text[0]?.plain_text,
     }
   })
-
-  console.log(services)
   return (
-    <>
-      <PageHeaderHeading>Servicios Saltillo</PageHeaderHeading>
-      <span className="hidden sm:inline">
-        Introducing Style, a new CLI and more.
-      </span>
-      <pre>{JSON.stringify(services, null, 2)}</pre>
-    </>
+    <div className="container relative">
+      <PageHeader className="pb-8">
+        <PageHeaderHeading>Servicios Saltillo 🏡</PageHeaderHeading>
+        <PageHeaderDescription>
+          Servicios para el hogar recomendados por tus vecinos.
+        </PageHeaderDescription>
+      </PageHeader>
+
+      <section className="block">
+        <div className="overflow-hidden rounded-lg border bg-background shadow p-4">
+          <ServicesDashboard services={services} />
+        </div>
+      </section>
+    </div>
   )
 }

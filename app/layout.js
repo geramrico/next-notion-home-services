@@ -1,8 +1,5 @@
+import { SiteFooter } from '@/components/site-footer'
 import './globals.css'
-import { SiteFooter } from "@/components/site-footer"
-import { SiteHeader } from "@/components/site-header"
-
-
 
 export const metadata = {
   title: 'Create Next App',
@@ -13,10 +10,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <div className="relative flex min-h-screen flex-col">
-        <SiteHeader />
         <div className="flex-1">{children}</div>
-        <SiteFooter />
       </div>
+      <SiteFooter />
     </html>
   )
 }
