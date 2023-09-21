@@ -11,6 +11,8 @@ const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 })
 
+export const revalidate = 86400
+
 export default async function Home() {
   const data = await notion.databases.query({
     database_id: process.env.NOTION_DB_ID,
