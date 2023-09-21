@@ -15,9 +15,8 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 
 function ServiceCard({ service }) {
-  console.log(service)
   return (
-    <Card key={service.id} className="flex flex-col h-full">
+    <Card className="flex flex-col h-full">
       <div className="flex flex-col md:flex-row">
         <CardHeader className="flex-grow">
           <CardTitle>{service.name}</CardTitle>
@@ -29,14 +28,19 @@ function ServiceCard({ service }) {
             >
               {service.phone}
             </a>
-            <p>{service.description}</p>
+
+            {service.description}
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="flex-grow flex-col align-middle">
-          <div className="flex flex-wrap mt-2 mb-2 justify-start">
+        <CardContent className="flex-grow flex-col sm:pt-6 items-center">
+          <div id="badge-container" className="flex flex-wrap my-2">
             {service.categories.map((category, index) => (
-              <Badge variant="secondary" key={index} className="ml-2">
+              <Badge
+                variant="secondary"
+                key={index}
+                className="ml-2 mb-2 px-4 py-2"
+              >
                 {category}
               </Badge>
             ))}
@@ -44,7 +48,10 @@ function ServiceCard({ service }) {
         </CardContent>
 
         <CardFooter className="sm:pt-6">
-          <Button className="w-full hover:bg-teal-600 focus:bg-teal-600">
+          <Button
+            className="w-full hover:bg-teal-600 focus:bg-teal-600"
+            size="sm"
+          >
             <Link href={`https://api.whatsapp.com/send?phone=${service.phone}`}>
               Envía un mensaje
             </Link>

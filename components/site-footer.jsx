@@ -14,7 +14,7 @@ export function SiteFooter() {
           >
             geramrico
           </a>
-          . Quieres desarrollar una app, mandame un{' '}
+          . Mandame un{' '}
           <a
             href={siteConfig.links.mail}
             target="_blank"

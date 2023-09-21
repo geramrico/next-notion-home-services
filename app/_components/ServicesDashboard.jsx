@@ -1,39 +1,50 @@
 'use client'
 
-import Link from 'next/link'
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from '@/components/ui/card'
+import { useState } from 'react'
 
-import { Badge } from '@/components/ui/badge'
-
-import { PhoneCallIcon } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
 import ServiceCard from './ServiceCard'
-import { useMemo, useState } from 'react'
+import CategoryButton from './CategoryButton'
 
-const ServicesDashboard = ({ services }) => {
-  const [selectedCategories, setSelectedCategories] = useState(new Set())
-  const [serviceList, setServiceList] = useState(services)
+const ServicesDashboard = ({ services, categories }) => {
+  const [selectedCategories, setSelectedCategories] = useState([])
 
-  const allCategories = useMemo(() => {
-    return Array.from(new Set(services.flatMap(service => service.categories)));
-  }, [services]);
+  const handleCategoryClick = (category) => {
+    setSelectedCategories((prevSelected) => {
+      if (prevSelected.includes(category)) {
+        return prevSelected.filter((cat) => cat !== category)
+      } else {
+        return [...prevSelected, category]
+      }
+    })
+  }
 
-  console.log(allCategories)
+  // Filter services based on selected categories
+  const filteredServices = services.filter(
+    (service) =>
+      selectedCategories.length === 0 ||
+      selectedCategories.some((cat) => service.categories.includes(cat))
+  )
 
   return (
-    <div className="grid grid-cols-1 gap-4">
-      {services.map((service) => (
-        <ServiceCard service={service} />
-      ))}
-    </div>
+    <>
+      <h2 className="text-md pb-4">Selecciona:</h2>
+      <div className="grid grid-cols-1 gap-4">
+        <div className="flex flex-wrap md:w-2/3 justify-start">
+          {categories.map((category) => (
+            <CategoryButton
+              key={category}
+              category={category}
+              selectedCategories={selectedCategories}
+              handleCategoryClick={handleCategoryClick}
+            />
+          ))}
+        </div>
+
+        {filteredServices.map((service) => (
+          <ServiceCard service={service} key={service.id} />
+        ))}
+      </div>
+    </>
   )
 }
 export default ServicesDashboard

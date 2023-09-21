@@ -29,6 +29,9 @@ export default async function Home() {
       description: item.properties.Description.rich_text[0]?.plain_text,
     }
   })
+
+  const categories = getUniqueCategories(services)
+
   return (
     <div className="container relative">
       <PageHeader className="pb-8">
@@ -40,9 +43,21 @@ export default async function Home() {
 
       <section className="block">
         <div className="overflow-hidden rounded-lg border bg-background shadow p-4">
-          <ServicesDashboard services={services} />
+          <ServicesDashboard services={services} categories={categories} />
         </div>
       </section>
     </div>
   )
+}
+
+function getUniqueCategories(services) {
+  const categories = new Set()
+
+  services.forEach((service) => {
+    service.categories.forEach((category) => {
+      categories.add(category)
+    })
+  })
+
+  return [...categories]
 }
