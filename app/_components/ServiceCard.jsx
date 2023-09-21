@@ -10,11 +10,13 @@ import {
   CardFooter,
 } from '@/components/ui/card'
 
+import { cn } from '@/lib/utils'
+
 import { Badge } from '@/components/ui/badge'
 
 import { Button } from '@/components/ui/button'
 
-function ServiceCard({ service }) {
+function ServiceCard({ service, handleCategoryClick, selectedCategories }) {
   return (
     <Card className="flex flex-col h-full">
       <div className="flex flex-col md:flex-row">
@@ -39,7 +41,11 @@ function ServiceCard({ service }) {
               <Badge
                 variant="secondary"
                 key={index}
-                className="ml-2 mb-2 px-4 py-2"
+                className={
+                  (cn('ml-2 mb-2 px-4 py-2'),
+                  selectedCategories.includes(category) ? 'bg-teal-600 text-white' : '')
+                }
+                onClick={() => handleCategoryClick(category)}
               >
                 {category}
               </Badge>

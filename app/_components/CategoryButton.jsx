@@ -13,8 +13,8 @@ const CategoryButton = ({
      size='sm'
       key={category}
       className={cn(
-        `ml-2 mb-2 md:mb-0 hover:bg-gray-500`,
-        selectedCategories.includes(category) ? 'bg-teal-500' : ''
+        `ml-2 mb-2 md:mb-0 hover:bg-teal-600`,
+        selectedCategories.includes(category) ? 'bg-teal-600' : ''
       )}
       onClick={() => handleCategoryClick(category)}
     >

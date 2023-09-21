@@ -41,7 +41,12 @@ const ServicesDashboard = ({ services, categories }) => {
         </div>
 
         {filteredServices.map((service) => (
-          <ServiceCard service={service} key={service.id} />
+          <ServiceCard
+            service={service}
+            key={service.id}
+            selectedCategories={selectedCategories}
+            handleCategoryClick={handleCategoryClick}
+          />
         ))}
       </div>
     </>
